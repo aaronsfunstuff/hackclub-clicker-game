@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pixel Coder Clicker</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="game-container">
+        <h1>Pixel Coder Clicker</h1>
+        <div id="main-content">
+            <div id="stats">
+                <h2>Stats</h2>
+                <p>Lines of Code: <span id="lines-of-code">0</span></p>
+                <p>Lines per Click: <span id="lines-per-click">1</span></p>
+            </div>
+            <div id="character-container">
+                <img id="character" src="character.png" alt="Coding Character">
+            </div>
+            <div id="upgrade-shop">
+                <h2>Upgrade Shop</h2>
+                <button id="buy-auto-coder">Auto Coder (Cost: 10 LOC)</button>
+                <button id="buy-better-keyboard">Better Keyboard (Cost: 50 LOC)</button>
+                <button id="buy-faster-computer">Faster Computer (Cost: 100 LOC)</button>
+                <button id="buy-coffee-boost">Coffee Boost (Cost: 200 LOC)</button>
+                <button id="buy-extra-monitor">Extra Monitor (Cost: 500 LOC)</button>
+            </div>
+        </div>
+    </div>
+    <audio id="click-sound" src="click-sound.mp3" preload="auto"></audio>
+    <audio id="purchase-sound" src="purchase-sound.mp3" preload="auto"></audio>
+    <script src="script.js"></script>
+</body>
+</html>
