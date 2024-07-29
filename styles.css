@@ -186,4 +186,38 @@ button[data-cost]:after {
         margin: 10px 0;
     }
 }
+#prestige-stats, #events-rewards {
+    margin: 20px;
+    padding: 20px;
+    background-color: rgba(34, 34, 34, 0.8);
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    max-width: 300px;
+    min-width: 260px;
+    position: relative;
+    overflow-y: auto;
+    max-height: 200px;
+}
+
+#prestige-stats h2, #events-rewards h2 {
+    font-size: 1.5em;
+    color: #ff8c37;
+}
+
+#prestige-stats ul, #events-rewards ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#prestige-stats li, #events-rewards li {
+    margin: 5px 0;
+    padding: 8px;
+    background-color: rgba(255, 140, 55, 0.1);
+    border-radius: 5px;
+}
+
+#prestige-stats li:hover, #events-rewards li:hover {
+    background-color: rgba(255, 140, 55, 0.2);
+}
+
 
