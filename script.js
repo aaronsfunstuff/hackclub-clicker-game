@@ -178,3 +178,141 @@ Object.keys(upgrades).forEach(upgradeName => updateButtonCost(upgradeName));
 
 updateStats();
 updateAchievementsList();
+const prestigeStatsEl = document.getElementById('prestige-stats');
+const eventsRewardsEl = document.getElementById('events-rewards');
+
+let prestigeStats = [];
+let eventsRewards = [];
+
+const prestigeMilestones = [
+    { milestone: 1, bonus: 0.1 },
+    { milestone: 5, bonus: 0.2 },
+    { milestone: 10, bonus: 0.5 },
+    { milestone: 20, bonus: 1 }
+];
+
+function calculatePrestigeBonus() {
+    let bonus = 0;
+    prestigeMilestones.forEach(milestone => {
+        if (prestigePoints >= milestone.milestone) {
+            bonus = milestone.bonus;
+        }
+    });
+    return bonus;
+}
+
+function updatePrestigeStats() {
+    prestigeStatsEl.innerHTML = "";
+    prestigeMilestones.forEach(milestone => {
+        const li = document.createElement('li');
+        li.textContent = `Milestone ${milestone.milestone} Prestige Points: Bonus ${milestone.bonus * 100}%`;
+        prestigeStatsEl.appendChild(li);
+    });
+}
+
+function startEvent() {
+    const eventDuration = 30;
+    let timeLeft = eventDuration;
+    const eventInterval = setInterval(() => {
+        timeLeft--;
+        eventTimerEl.textContent = `Event Time Left: ${timeLeft}s`;
+        if (timeLeft <= 0) {
+            clearInterval(eventInterval);
+            eventActive = false;
+            eventTimerEl.textContent = '';
+            const reward = Math.floor(Math.random() * 1000) + 500;
+            linesOfCode += reward;
+            eventsRewards.push({ reward, timestamp: new Date().toLocaleTimeString() });
+            alert(`Event ended! You earned ${reward} LOC!`);
+            updateEventsRewards();
+            updateStats();
+        }
+    }, 1000);
+}
+
+function updateEventsRewards() {
+    eventsRewardsEl.innerHTML = "";
+    eventsRewards.forEach(reward => {
+        const li = document.createElement('li');
+        li.textContent = `Reward: ${reward.reward} LOC at ${reward.timestamp}`;
+        eventsRewardsEl.appendChild(li);
+    });
+}
+
+function unlockSpecialAchievement() {
+    if (linesOfCode >= 500000) {
+        alert('Special Achievement Unlocked: Code Master!');
+    }
+}
+
+function startCodeChallenge() {
+    const challengeDuration = 10;
+    let timeLeft = challengeDuration;
+    const challengeInterval = setInterval(() => {
+        timeLeft--;
+        eventTimerEl.textContent = `Challenge Time Left: ${timeLeft}s`;
+        if (timeLeft <= 0) {
+            clearInterval(challengeInterval);
+            eventTimerEl.textContent = '';
+            const challengeReward = Math.floor(Math.random() * 2000) + 1000;
+            linesOfCode += challengeReward;
+            unlockSpecialAchievement();
+            alert(`Challenge ended! You earned ${challengeReward} LOC!`);
+            updateStats();
+        }
+    }, 1000);
+}
+
+function randomEvent() {
+    const events = ['Start Event', 'Start Code Challenge'];
+    const randomEvent = events[Math.floor(Math.random() * events.length)];
+    if (randomEvent === 'Start Event') {
+        startEvent();
+    } else if (randomEvent === 'Start Code Challenge') {
+        startCodeChallenge();
+    }
+}
+
+document.getElementById('start-random-event').addEventListener('click', () => {
+    randomEvent();
+});
+
+function updateStats() {
+    linesOfCodeEl.textContent = linesOfCode;
+    linesPerClickEl.textContent = linesPerClick;
+    linesPerSecondEl.textContent = linesPerSecond;
+    prestigePointsEl.textContent = prestigePoints;
+    checkAchievements();
+    updatePrestigeStats();
+    unlockSpecialAchievement();
+}
+
+document.getElementById('start-random-event').addEventListener('click', () => {
+    randomEvent();
+});
+
+document.getElementById('prestige-button').addEventListener('click', () => {
+    if (linesOfCode >= 10000) {
+        prestigePoints += Math.floor(linesOfCode / 10000);
+        linesOfCode = 0;
+        linesPerClick = 1;
+        linesPerSecond = 0;
+        updateStats();
+        alert('You have prestiged! Gain bonuses for starting over!');
+    }
+});
+
+setInterval(() => {
+    if (linesPerSecond > 0) {
+        linesOfCode += linesPerSecond;
+        updateStats();
+        Object.keys(upgrades).forEach((upgradeName) => updateButtonCost(upgradeName));
+    }
+}, 1000);
+
+Object.keys(upgrades).forEach(upgradeName => updateButtonCost(upgradeName));
+
+updateStats();
+updateAchievementsList();
+updatePrestigeStats();
+updateEventsRewards();
